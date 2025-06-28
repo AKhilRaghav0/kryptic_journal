@@ -87,8 +87,18 @@ class _HybridLiveTileState extends State<HybridLiveTile> {
                   gradient: widget.useGradient ? widget.gradient : null,
                   color: widget.useGradient ? null : widget.backgroundColor,
                   boxShadow: widget.useElevation && !_isPressed
-                      ? AppTheme
-                            .iosShadow // iOS-style shadows
+                      ? [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.06),
+                            blurRadius: 16,
+                            offset: const Offset(0, 4),
+                          ),
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.03),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ]
                       : null,
                 ),
                 child: widget.child ?? _buildDefaultContent(),
@@ -121,7 +131,7 @@ class _HybridLiveTileState extends State<HybridLiveTile> {
               if (widget.count != null)
                 Text(
                   widget.count!,
-                  style: const TextStyle(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     color: Colors.white,
                     fontSize: 32,
                     fontWeight: FontWeight.w800,
@@ -139,7 +149,7 @@ class _HybridLiveTileState extends State<HybridLiveTile> {
             children: [
               Text(
                 widget.title.toLowerCase(),
-                style: const TextStyle(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -152,7 +162,7 @@ class _HybridLiveTileState extends State<HybridLiveTile> {
                 const SizedBox(height: 4),
                 Text(
                   widget.subtitle!,
-                  style: TextStyle(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -226,10 +236,25 @@ class _HybridCardState extends State<HybridCard> {
           gradient: widget.useGradient ? widget.gradient : null,
           color: widget.useGradient
               ? null
-              : (widget.backgroundColor ?? AppTheme.backgroundWhite),
+              : (widget.backgroundColor ?? AppTheme.backgroundWhite.withValues(alpha: 0.95)),
           boxShadow: widget.useElevation && !_isPressed
-              ? AppTheme.iosShadow
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 12,
+                    offset: const Offset(0, 2),
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.02),
+                    blurRadius: 6,
+                    offset: const Offset(0, 1),
+                  ),
+                ]
               : null,
+          border: Border.all(
+            color: AppTheme.backgroundWhite.withValues(alpha: 0.2),
+            width: 0.5,
+          ),
         ),
         child: Container(
           padding: widget.padding ?? const EdgeInsets.all(16),

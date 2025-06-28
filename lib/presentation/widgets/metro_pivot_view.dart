@@ -91,7 +91,15 @@ class _MetroPivotViewState extends State<MetroPivotView>
         // Enhanced Pivot Headers with auto-slide
         Container(
           height: 90,
-          color: AppTheme.backgroundWhite,
+          decoration: BoxDecoration(
+            color: AppTheme.backgroundGray, // Blend with app background
+            border: Border(
+              bottom: BorderSide(
+                color: AppTheme.backgroundWhite.withValues(alpha: 0.3),
+                width: 0.5,
+              ),
+            ),
+          ),
           child: ListView.builder(
             controller: _headerScrollController,
             scrollDirection: Axis.horizontal,
@@ -109,10 +117,10 @@ class _MetroPivotViewState extends State<MetroPivotView>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Bold, round text when selected
+                      // Bold, round text when selected - using theme font
                       AnimatedDefaultTextStyle(
                         duration: const Duration(milliseconds: 300),
-                        style: TextStyle(
+                        style: Theme.of(context).textTheme.displayMedium!.copyWith(
                           fontSize: isSelected ? 42 : 36,
                           fontWeight: isSelected
                               ? FontWeight.w800
@@ -139,7 +147,7 @@ class _MetroPivotViewState extends State<MetroPivotView>
 
                       const SizedBox(height: 8),
 
-                      // Animated selection indicator
+                      // Animated selection indicator with improved blending
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
                         height: 3,
@@ -147,6 +155,13 @@ class _MetroPivotViewState extends State<MetroPivotView>
                         decoration: BoxDecoration(
                           color: AppTheme.primaryAccent,
                           borderRadius: BorderRadius.circular(2),
+                          boxShadow: isSelected ? [
+                            BoxShadow(
+                              color: AppTheme.primaryAccent.withValues(alpha: 0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            )
+                          ] : null,
                         ),
                       ),
                     ],

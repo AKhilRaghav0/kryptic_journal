@@ -53,7 +53,7 @@ class AppTheme {
 
   static ThemeData hybridTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: 'SFProRounded',
+    fontFamily: 'Outfit', // Using Outfit font throughout the app
     colorScheme: const ColorScheme.light(
       primary: primaryAccent,
       secondary: tileGreen,
@@ -72,7 +72,7 @@ class AppTheme {
     textTheme: const TextTheme(
       // Windows Phone inspired headers with iOS refinement
       displayLarge: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 64,
         fontWeight: FontWeight.w700,
         letterSpacing: -2.0,
@@ -80,7 +80,7 @@ class AppTheme {
         height: 0.9,
       ),
       displayMedium: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 42,
         fontWeight: FontWeight.w700,
         letterSpacing: -1.2,
@@ -89,7 +89,7 @@ class AppTheme {
       ),
       // Modern section headers
       headlineLarge: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 36,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.8,
@@ -97,7 +97,7 @@ class AppTheme {
         height: 1.1,
       ),
       headlineMedium: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 28,
         fontWeight: FontWeight.w600,
         letterSpacing: -0.5,
@@ -105,7 +105,7 @@ class AppTheme {
         height: 1.15,
       ),
       headlineSmall: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 22,
         fontWeight: FontWeight.w600,
         color: textPrimary,
@@ -113,7 +113,7 @@ class AppTheme {
       ),
       // Body text with Android clarity
       bodyLarge: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 17,
         fontWeight: FontWeight.w400,
         color: textPrimary,
@@ -121,7 +121,7 @@ class AppTheme {
         letterSpacing: 0.1,
       ),
       bodyMedium: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 15,
         fontWeight: FontWeight.w400,
         color: textPrimary,
@@ -129,7 +129,7 @@ class AppTheme {
         letterSpacing: 0.15,
       ),
       bodySmall: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 13,
         fontWeight: FontWeight.w400,
         color: textSecondary,
@@ -138,7 +138,7 @@ class AppTheme {
       ),
       // Labels with Windows Phone character
       labelLarge: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 16,
         fontWeight: FontWeight.w700,
         color: textPrimary,
@@ -146,7 +146,7 @@ class AppTheme {
         letterSpacing: 0.1,
       ),
       labelMedium: TextStyle(
-        fontFamily: 'SFProRounded',
+        fontFamily: 'Outfit',
         fontSize: 14,
         fontWeight: FontWeight.w600,
         color: textSecondary,
