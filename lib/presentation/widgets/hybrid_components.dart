@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:heroicons/heroicons.dart';
 import '../../core/theme/app_theme.dart';
 
 // HYBRID LIVE TILE - Windows Phone + iOS + Android
@@ -7,7 +8,7 @@ class HybridLiveTile extends StatefulWidget {
   final String title;
   final String? subtitle;
   final String? count;
-  final IconData? icon;
+  final dynamic icon; // Can accept both IconData and HeroIcons
   final Color? backgroundColor;
   final LinearGradient? gradient;
   final HybridTileSize size;
@@ -126,7 +127,9 @@ class _HybridLiveTileState extends State<HybridLiveTile> {
                     color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(widget.icon, color: Colors.white, size: 24),
+                  child: widget.icon is HeroIcons 
+                    ? HeroIcon(widget.icon as HeroIcons, color: Colors.white, size: 24)
+                    : Icon(widget.icon as IconData, color: Colors.white, size: 24),
                 ),
               if (widget.count != null)
                 Text(
@@ -329,7 +332,7 @@ class HybridListItem extends StatelessWidget {
             trailing!,
           ] else if (onTap != null) ...[
             const SizedBox(width: 12),
-            Icon(Icons.chevron_right, color: AppTheme.textLight, size: 20),
+            HeroIcon(HeroIcons.chevronRight, color: AppTheme.textLight, size: 20),
           ],
         ],
       ),
@@ -340,7 +343,7 @@ class HybridListItem extends StatelessWidget {
 // FLOATING ACTION GROUP - Android FAB + iOS design + Windows Phone colors
 class HybridFloatingActionGroup extends StatefulWidget {
   final List<HybridFloatingAction> actions;
-  final IconData mainIcon;
+  final dynamic mainIcon; // Can accept both IconData and HeroIcons
   final Color? backgroundColor;
   final bool isExpanded;
   final VoidCallback? onMainTap;
@@ -348,7 +351,7 @@ class HybridFloatingActionGroup extends StatefulWidget {
   const HybridFloatingActionGroup({
     super.key,
     required this.actions,
-    this.mainIcon = Icons.add,
+    this.mainIcon = HeroIcons.plus,
     this.backgroundColor,
     this.isExpanded = false,
     this.onMainTap,
@@ -413,7 +416,9 @@ class _HybridFloatingActionGroupState extends State<HybridFloatingActionGroup>
                       backgroundColor:
                           action.backgroundColor ?? AppTheme.primaryAccent,
                       onPressed: action.onTap,
-                      child: Icon(action.icon, color: Colors.white),
+                      child: action.icon is HeroIcons 
+                        ? HeroIcon(action.icon as HeroIcons, color: Colors.white)
+                        : Icon(action.icon as IconData, color: Colors.white),
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -427,7 +432,9 @@ class _HybridFloatingActionGroupState extends State<HybridFloatingActionGroup>
           child: AnimatedRotation(
             turns: _isExpanded ? 0.125 : 0, // 45 degree rotation
             duration: const Duration(milliseconds: 300),
-            child: Icon(widget.mainIcon, color: Colors.white),
+            child: widget.mainIcon is HeroIcons 
+              ? HeroIcon(widget.mainIcon as HeroIcons, color: Colors.white)
+              : Icon(widget.mainIcon as IconData, color: Colors.white),
           ),
         ),
       ],
@@ -436,7 +443,7 @@ class _HybridFloatingActionGroupState extends State<HybridFloatingActionGroup>
 }
 
 class HybridFloatingAction {
-  final IconData icon;
+  final dynamic icon; // Can accept both IconData and HeroIcons
   final VoidCallback onTap;
   final Color? backgroundColor;
   final String? tooltip;

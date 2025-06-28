@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import 'package:heroicons/heroicons.dart';
 import '../widgets/metro_pivot_view.dart';
 import '../widgets/hybrid_components.dart';
 import '../../core/theme/app_theme.dart';
@@ -14,19 +14,54 @@ class JournalHub extends StatelessWidget {
       body: SafeArea(
         child: MetroPivotView(
           items: [
-            PivotItem(title: 'start', content: const StartView()),
-            PivotItem(title: 'recent', content: const RecentEntriesView()),
-            PivotItem(title: 'all entries', content: const AllEntriesView()),
-            PivotItem(title: 'people', content: const PeopleView()),
+            PivotItem(title: '', content: const DashboardView(), icon: HeroIcons.bookOpen), // Book icon for dashboard
+            PivotItem(title: 'list', content: const ListEntriesView()),
+            PivotItem(title: 'calendar', content: const CalendarView()),
+            PivotItem(title: 'media', content: const MediaView()),
+            PivotItem(title: 'map', content: const MapView()),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // TODO: Navigate to new entry screen
+        },
+        icon: const HeroIcon(HeroIcons.plus),
+        label: Text(
+          'New entry',
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: AppTheme.backgroundWhite,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: AppTheme.primaryAccent,
+        foregroundColor: AppTheme.backgroundWhite,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppTheme.backgroundWhite,
+        selectedItemColor: AppTheme.primaryAccent,
+        unselectedItemColor: AppTheme.textSecondary,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        items: const [
+          BottomNavigationBarItem(
+            icon: HeroIcon(HeroIcons.bookOpen),
+            label: 'Journals',
+          ),
+          BottomNavigationBarItem(
+            icon: HeroIcon(HeroIcons.ellipsisHorizontal),
+            label: 'More',
+          ),
+        ],
       ),
     );
   }
 }
 
-class StartView extends StatelessWidget {
-  const StartView({super.key});
+class DashboardView extends StatelessWidget {
+  const DashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +73,7 @@ class StartView extends StatelessWidget {
         children: [
           HybridLiveTile(
             title: 'new entry',
-            icon: Icons.add,
+            icon: HeroIcons.plus,
             backgroundColor: AppTheme.tileBlue,
             size: HybridTileSize.small,
             useElevation: true,
@@ -55,7 +90,7 @@ class StartView extends StatelessWidget {
           ),
           HybridLiveTile(
             title: 'quick note',
-            icon: Icons.edit,
+            icon: HeroIcons.pencil,
             backgroundColor: AppTheme.tileOrange,
             size: HybridTileSize.small,
             useElevation: true,
@@ -63,7 +98,7 @@ class StartView extends StatelessWidget {
           ),
           HybridLiveTile(
             title: 'voice memo',
-            icon: Icons.mic,
+            icon: HeroIcons.microphone,
             backgroundColor: AppTheme.tilePurple,
             size: HybridTileSize.small,
             useGradient: true,
@@ -90,7 +125,7 @@ class StartView extends StatelessWidget {
           ),
           HybridLiveTile(
             title: 'search',
-            icon: Icons.search,
+            icon: HeroIcons.magnifyingGlass,
             backgroundColor: AppTheme.tileRed,
             size: HybridTileSize.small,
             useElevation: true,
@@ -98,7 +133,7 @@ class StartView extends StatelessWidget {
           ),
           HybridLiveTile(
             title: 'settings',
-            icon: Icons.settings,
+            icon: HeroIcons.cog6Tooth,
             backgroundColor: AppTheme.tileBrown,
             size: HybridTileSize.small,
             useGradient: true,
@@ -179,7 +214,7 @@ class AllEntriesView extends StatelessWidget {
                 useElevation: true,
                 child: Row(
                   children: [
-                    Icon(Icons.search, color: AppTheme.textSecondary, size: 20),
+                    HeroIcon(HeroIcons.magnifyingGlass, color: AppTheme.textSecondary, size: 20),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -354,6 +389,316 @@ class PeopleView extends StatelessWidget {
           onTap: () {},
         ),
       ],
+    );
+  }
+}
+
+class CalendarView extends StatelessWidget {
+  const CalendarView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            'June 2025',
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              color: AppTheme.textSecondary,
+            ),
+          ),
+        ),
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            children: [
+              _buildDayEntry(context, 'SAT', '28', 'Day 1 of Journaling my Thoughts', 'Journal • 11:45 am'),
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text(
+                  'July 2024',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: AppTheme.textSecondary,
+                  ),
+                ),
+              ),
+              _buildDayEntry(context, 'SUN', '07', 'Day One Essentials Guide', 'Welcome to Day One, we\'re glad you\'re here...', subtitle: 'Journal • 1:10 pm'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDayEntry(BuildContext context, String dayOfWeek, String day, String title, String content, {String? subtitle}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Date column
+          Container(
+            width: 60,
+            child: Column(
+              children: [
+                Text(
+                  dayOfWeek,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppTheme.textSecondary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  day,
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 16),
+          // Content column
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  content,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppTheme.textSecondary,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (subtitle != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppTheme.primaryAccent,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MediaView extends StatelessWidget {
+  const MediaView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(24),
+      children: [
+        Text(
+          'Photos & Media',
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            color: AppTheme.textSecondary,
+          ),
+        ),
+        const SizedBox(height: 24),
+        HybridCard(
+          child: Column(
+            children: [
+              HeroIcon(
+                HeroIcons.photo,
+                size: 48,
+                color: AppTheme.textLight,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'No photos yet',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Photos from your entries will appear here',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppTheme.textLight,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MapView extends StatelessWidget {
+  const MapView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(24),
+      children: [
+        Text(
+          'Places',
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            color: AppTheme.textSecondary,
+          ),
+        ),
+        const SizedBox(height: 24),
+        HybridCard(
+          child: Column(
+            children: [
+              HeroIcon(
+                HeroIcons.mapPin,
+                size: 48,
+                color: AppTheme.textLight,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'No locations yet',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Locations from your entries will appear here',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppTheme.textLight,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ListEntriesView extends StatelessWidget {
+  const ListEntriesView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      children: [
+        // June 2025 section
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+          child: Text(
+            'June 2025',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: AppTheme.textSecondary,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        _buildEntryItem(context, 'SAT', '28', 'Day 1 of Journaling my Thoughts', 'Journal • 11:45 am'),
+        
+        // July 2024 section
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 32, 24, 8),
+          child: Text(
+            'July 2024',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: AppTheme.textSecondary,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        _buildEntryItem(context, 'SUN', '07', 'Day One Essentials Guide', 'Welcome to Day One, we\'re glad you\'re here. If you\'re wondering what you can do with your new journal, yo...', subtitle: 'Journal • 1:10 pm'),
+      ],
+    );
+  }
+
+  Widget _buildEntryItem(BuildContext context, String dayOfWeek, String day, String title, String content, {String? subtitle}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Date column
+          Container(
+            width: 50,
+            child: Column(
+              children: [
+                Text(
+                  dayOfWeek,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppTheme.textSecondary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  day,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                    height: 1.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 16),
+          // Content column
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    height: 1.3,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle ?? content,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: subtitle != null ? AppTheme.primaryAccent : AppTheme.textSecondary,
+                    fontWeight: subtitle != null ? FontWeight.w500 : FontWeight.w400,
+                  ),
+                  maxLines: subtitle != null ? 1 : 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (subtitle != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    content,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppTheme.textSecondary,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

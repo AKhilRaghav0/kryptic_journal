@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:heroicons/heroicons.dart';
 import '../../core/theme/app_theme.dart';
 
 class PivotItem {
   final String title;
   final Widget content;
-  final IconData? icon;
+  final HeroIcons? icon;
 
   PivotItem({required this.title, required this.content, this.icon});
 }
@@ -90,7 +91,7 @@ class _MetroPivotViewState extends State<MetroPivotView>
       children: [
         // Enhanced Pivot Headers with auto-slide
         Container(
-          height: 90,
+          height: 70, // Reduced from 90 to give more space to content
           decoration: BoxDecoration(
             color: AppTheme.backgroundGray, // Blend with app background
             border: Border(
@@ -113,36 +114,61 @@ class _MetroPivotViewState extends State<MetroPivotView>
                 onTap: () => _onHeaderTap(index),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.only(right: 50),
+                  margin: EdgeInsets.only(
+                    right: (index == 0 && item.title.isEmpty) ? 16 : 50, // Minimize gap after book icon
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Bold, round text when selected - using theme font
-                      AnimatedDefaultTextStyle(
-                        duration: const Duration(milliseconds: 300),
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                          fontSize: isSelected ? 42 : 36,
-                          fontWeight: isSelected
-                              ? FontWeight.w800
-                              : FontWeight.w200,
-                          letterSpacing: isSelected ? -1.2 : -0.8,
-                          color: isSelected
-                              ? AppTheme.textPrimary
-                              : AppTheme.textLight,
-                          height: 1.0,
-                        ),
-                        child: Text(item.title.toLowerCase()),
-                      ).animate(
-                        effects: isSelected
-                            ? [
-                                const ScaleEffect(
-                                  begin: Offset(0.95, 0.95),
-                                  end: Offset(1.0, 1.0),
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.easeOutBack,
+                      // Show icon for first tab and bold text for selected
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Show book icon only for the first tab (when title is empty)
+                          if (item.title.isEmpty && item.icon != null) ...[
+                            HeroIcon(
+                              item.icon!,
+                              size: isSelected ? 28 : 24, // Reduced icon sizes
+                              color: isSelected
+                                  ? AppTheme.textPrimary
+                                  : AppTheme.textLight,
+                            ),
+                          ] else ...[
+                            // Bold, round text when selected - using theme font
+                            Container(
+                              alignment: Alignment.centerLeft, // Ensure left alignment
+                              child: AnimatedDefaultTextStyle(
+                                duration: const Duration(milliseconds: 300),
+                                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                                  fontSize: isSelected ? 36 : 32, // Reduced font sizes
+                                  fontWeight: isSelected
+                                      ? FontWeight.w800
+                                      : FontWeight.w200,
+                                  letterSpacing: isSelected ? -1.0 : -0.6, // Adjusted letter spacing
+                                  color: isSelected
+                                      ? AppTheme.textPrimary
+                                      : AppTheme.textLight,
+                                  height: 1.0,
                                 ),
-                              ]
-                            : [],
+                                child: Text(
+                                  item.title.toLowerCase(),
+                                  textAlign: TextAlign.left, // Explicitly set left alignment
+                                ),
+                              ).animate(
+                                effects: isSelected
+                                    ? [
+                                        const ScaleEffect(
+                                          begin: Offset(0.95, 0.95),
+                                          end: Offset(1.0, 1.0),
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.easeOutBack,
+                                        ),
+                                    ]
+                                  : [],
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
 
                       const SizedBox(height: 8),
