@@ -1,0 +1,85 @@
+name: kryptic_journal
+description: "A privacy-first, offline-first encrypted personal journal application built with Flutter."
+publish_to: 'none' # Private package
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+
+  # Local Database & Storage
+  drift: ^2.14.1
+  sqlite3_flutter_libs: ^0.5.15
+  path_provider: ^2.1.1
+  path: ^1.8.3
+
+  # Encryption & Security
+  encrypt: ^5.0.1
+  crypto: ^3.0.3
+  pointycastle: ^3.7.3
+  local_auth: ^2.1.6
+  flutter_secure_storage: ^9.0.0
+
+  # UI & Navigation
+  go_router: ^12.1.3
+  flutter_animate: ^4.2.0+1
+  cupertino_icons: ^1.0.6
+
+  # Rich Text Editor & Media
+  # flutter_quill: ^8.4.3
+  image_picker: ^1.0.4
+  file_picker: ^6.1.1
+
+  # HTTP & Networking (for future sync)
+  dio: ^5.4.0
+  json_annotation: ^4.8.1
+
+  # Utilities
+  uuid: ^4.2.1
+  logger: ^2.0.2+1
+  freezed_annotation: ^2.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+  # Code Generation
+  build_runner: ^2.4.7
+  json_serializable: ^6.7.1
+  drift_dev: ^2.14.1
+  riverpod_generator: ^2.3.9
+  freezed: ^2.4.6
+
+  # Testing
+  mockito: ^5.4.2
+  mocktail: ^1.0.1
+
+flutter:
+  uses-material-design: true
+
+  # Assets
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  # Fonts (will be added later for custom typography)
+  fonts:
+    - family: SFProRounded
+      fonts:
+        - asset: assets/fonts/sf_pro_rounded/SF-Pro-Rounded-Regular.otf
+        - asset: assets/fonts/sf_pro_rounded/SF-Pro-Rounded-Medium.otf
+          weight: 500
+        - asset: assets/fonts/sf_pro_rounded/SF-Pro-Rounded-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/sf_pro_rounded/SF-Pro-Rounded-Bold.otf
+          weight: 700
